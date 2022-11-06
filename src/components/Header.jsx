@@ -9,7 +9,7 @@ const Header = ({insultFunction}) => {
   	</Avatar>
   	<Flex flexDirection="column" mx="5" mr="575" justify="center">
     	<Text fontSize="lg" fontWeight="bold">
-      	Ferin Patel
+      	ToughLove.exe
     	</Text>
     	<Text color="green.500">Online</Text>
   	</Flex>

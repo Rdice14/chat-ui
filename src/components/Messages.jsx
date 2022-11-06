@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import { Avatar, Flex, Text } from "@chakra-ui/react";
+import { Avatar, Flex, Text, InfoIcon, Popover, PopoverArrow, onOpen, onClose, MdCheckCircle, List, ListItem, ListIcon, FocusLock, PopoverCloseButton, PopoverContent, IconButton, PopoverTrigger, isOpen, first } from "@chakra-ui/react";
+import Insult from "./Insult";
 
 const Messages = ({ messages }) => {
   const AlwaysScrollToBottom = () => {
@@ -21,12 +22,15 @@ const Messages = ({ messages }) => {
             	maxW="350px"
             	my="1"
             	p="3"
+				borderRadius="8px"
           	>
             	<Text>{item.text}</Text>
           	</Flex>
         	</Flex>
       	);
-    	} else {
+    	} else if (item.insult) { 
+			return (<Insult text={item.text} index={index} />);
+		} else {
       	return (
         	<Flex key={index} w="100%">
           	<Avatar
@@ -41,6 +45,7 @@ const Messages = ({ messages }) => {
             	maxW="350px"
             	my="1"
             	p="3"
+				borderRadius="8px"
           	>
             	<Text>{item.text}</Text>
           	</Flex>

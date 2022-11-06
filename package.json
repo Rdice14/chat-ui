@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.11",
+    "@chakra-ui/layout": "^2.1.9",
     "@chakra-ui/react": "^2.3.6",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
@@ -12,6 +14,8 @@
     "framer-motion": "^5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-focus-lock": "^2.9.1",
+    "react-icons": "^4.6.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.0"
   },

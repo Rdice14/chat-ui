@@ -23,7 +23,7 @@ const Chat = () => {
 	}
 	const data = inputMessage;
 
-	setMessages((old) => [...old, { from: "me", text: data }]);
+	setMessages((old) => [...old, { from: "me", text: data, insult: false }]);
 	setInputMessage("");
 
 	const responeData = await fetch("localhost:9000/get-response", {
@@ -37,19 +37,22 @@ const Chat = () => {
 	intentHistory.push(responseJson);
 
 	setTimeout(() => {
-  	setMessages((old) => [...old, { from: "computer", text: responseJson["text"] }]);
+  	setMessages((old) => [...old, { from: "computer", text: responseJson["text"], insult: false }]);
 	}, 1000);
   };
 
   const handleInsultCreation = async (responseHistory) => {
 	setRevealInsult(true);
-	const responeData = await fetch("localhost:9000/get-insult", {
-		method: "POST",
-		body: {
-			data: responseHistory
-		}
-	})
-	insultData = responeData.json()
+	// const responeData = await fetch("localhost:9000/get-insult", {
+	// 	method: "POST",
+	// 	body: {
+	// 		data: responseHistory
+	// 	}
+	// })
+	// insultData = responeData.json()
+	setTimeout(() => {
+		setMessages((old) => [...old, { from: "computer", text: "foo", insult: true }]);
+	  }, 1000);
   }
 
   return (
@@ -59,9 +62,6 @@ const Chat = () => {
 		insultFunction={handleInsultCreation}/>
     	<Divider />
     	<Messages messages={messages} />
-    	{revealInsult &&
-			<Insult data={"foo"}/> //change to insultData
-		}
 		<Divider />
     	<Footer
       	inputMessage={inputMessage}

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Avatar, Flex, Text, InfoIcon, Popover, PopoverArrow, onOpen, onClose, MdCheckCircle, List, ListItem, ListIcon, FocusLock, PopoverCloseButton, PopoverContent, IconButton, PopoverTrigger, isOpen, first } from "@chakra-ui/react";
 import Insult from "./Insult";
+import Responses from "./Responses";
 
 const Messages = ({ messages }) => {
   const AlwaysScrollToBottom = () => {
@@ -28,8 +29,10 @@ const Messages = ({ messages }) => {
           	</Flex>
         	</Flex>
       	);
-    	} else if (item.insult) { 
-			return (<Insult text={item.text} index={index} />);
+    	} else if (item.isInsult) { 
+			return (<Insult text={item.text} index={index}/>);
+		} else if (item.isResponse) { 
+			return (<Responses responseList={item.responses} index={index}/>);
 		} else {
       	return (
         	<Flex key={index} w="100%">

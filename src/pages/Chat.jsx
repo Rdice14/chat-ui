@@ -3,11 +3,10 @@ import React, { useState } from "react";
 import Divider from "../components/Divider";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import Insult from "../components/Insult";
 import Messages from "../components/Messages";
 
-let intentHistory = []
-let insultData = []
+var lastUserText = "";
+var lastUserPrefixFromBot = "";
 
 const Chat = () => {
 
@@ -22,6 +21,7 @@ const Chat = () => {
 		return;
 	}
 	const data = inputMessage;
+	lastUserText = inputMessage;
 
 	setMessages((old) => [...old, { from: "me", text: data, insult: false }]);
 	setInputMessage("");
@@ -34,32 +34,39 @@ const Chat = () => {
 	});
 
 	const responseJson = responeData.json();
-	intentHistory.push(responseJson);
+	lastUserPrefixFromBot = responeData["user_input_category"];
 
 	setTimeout(() => {
-  	setMessages((old) => [...old, { from: "computer", text: responseJson["text"], insult: false }]);
+  	setMessages((old) => [...old, { from: "computer", text: responseJson["chatbot_response"], insult: false }]);
 	}, 1000);
   };
 
-  const handleInsultCreation = async (responseHistory) => {
+  const handleInsultCreation = async () => {
 	setRevealInsult(true);
-	// const responeData = await fetch("localhost:9000/get-insult", {
-	// 	method: "POST",
-	// 	body: {
-	// 		data: responseHistory
-	// 	}
-	// })
-	// insultData = responeData.json()
+	lastUserText = lastUserText.toLowerCase();
+	lastUserText = lastUserText.replace("you", "i");
+	lastUserText = lastUserText.replace("are", "am");
+	const responeData = await fetch("localhost:9000/get-insult", {
+		method: "POST",
+		body: {
+			text: lastUserText,
+			prefix: lastUserPrefixFromBot
+		}
+	});
+	insultData = responeData.json()
 	setTimeout(() => {
-		setMessages((old) => [...old, { from: "computer", text: "foo", insult: true }]);
-	  }, 1000);
+		setMessages((old) => [...old, { from: "computer", text: "foo", isInsult: true, responses: ["foo", "doo", "boo"] }]);
+	  }, 10);
+	  setTimeout(() => {
+		setMessages((old) => [...old, { from: "computer", text: "foo", isInsult: false, responses: ["foo", "doo", "boo"], isResponse: true }]);
+	  }, 11);
   }
 
   return (
 	<Flex w="100%" h="100vh" justify="center" align="center">
   	<Flex w="40%" h="90%" flexDir="column">
     	<Header 
-		insultFunction={handleInsultCreation}/>
+		handleInsultCreation={handleInsultCreation}/>
     	<Divider />
     	<Messages messages={messages} />
 		<Divider />

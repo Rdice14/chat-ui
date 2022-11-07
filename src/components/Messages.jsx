@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import { Avatar, Flex, Text, InfoIcon, Popover, PopoverArrow, onOpen, onClose, MdCheckCircle, List, ListItem, ListIcon, FocusLock, PopoverCloseButton, PopoverContent, IconButton, PopoverTrigger, isOpen, first } from "@chakra-ui/react";
-import Insult from "./Insult";
-import Responses from "./Responses";
+import { Avatar, Flex, Text } from "@chakra-ui/react";
+import Custom from "./Custom";
+import Skeleton from "react-loading-skeleton";
 
 const Messages = ({ messages }) => {
   const AlwaysScrollToBottom = () => {
@@ -14,46 +14,46 @@ const Messages = ({ messages }) => {
 	<Flex w="100%" h="80%" overflowY="scroll" flexDirection="column" p="3">
   	{messages.map((item, index) => {
     	if (item.from === "me") {
-      	return (
-        	<Flex key={index} w="100%" justify="flex-end">
-          	<Flex
-            	bg="black"
-            	color="white"
-            	minW="100px"
-            	maxW="350px"
-            	my="1"
-            	p="3"
-				borderRadius="8px"
-          	>
-            	<Text>{item.text}</Text>
-          	</Flex>
-        	</Flex>
-      	);
-    	} else if (item.isInsult) { 
-			return (<Insult text={item.text} index={index}/>);
-		} else if (item.isResponse) { 
-			return (<Responses responseList={item.responses} index={index}/>);
+			return (
+				<Flex key={index} w="100%" justify="flex-end">
+				<Flex
+					bg="black"
+					color="white"
+					minW="100px"
+					maxW="350px"
+					my="1"
+					p="3"
+					borderRadius="8px"
+				>
+					<Text>{item.text}</Text>
+				</Flex>
+				</Flex>
+			);
+    	} else if (item.isCustom) { 
+			return (<Custom text={item.text} index={index} model={item.from} isInsult={item.isInsult} />);
 		} else {
-      	return (
-        	<Flex key={index} w="100%">
-          	<Avatar
-            	name="Computer"
-            	src="https://avataaars.io/?avatarStyle=Transparent&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light"
-            	bg="blue.300"
-          	></Avatar>
-          	<Flex
-            	bg="gray.100"
-            	color="black"
-            	minW="100px"
-            	maxW="350px"
-            	my="1"
-            	p="3"
-				borderRadius="8px"
-          	>
-            	<Text>{item.text}</Text>
-          	</Flex>
-        	</Flex>
-      	);
+			return (
+				<Flex key={index} w="100%">
+				<Avatar
+					name="The bot"
+					src={modelAvatar[item.from]}
+					bg="blue.300"
+				></Avatar>
+					<Skeleton count={3}>
+						<Flex
+							bg="gray.100"
+							color="black"
+							minW="100px"
+							maxW="350px"
+							my="1"
+							p="3"
+							borderRadius="8px"
+						>
+							<Text>{item.text}</Text>
+						</Flex>
+					</Skeleton>
+				</Flex>
+			);
     	}
   	})}
   	<AlwaysScrollToBottom />

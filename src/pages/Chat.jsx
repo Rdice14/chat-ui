@@ -6,13 +6,12 @@ import Header from "../components/Header";
 import Messages from "../components/Messages";
 
 var lastUserText = "";
-var lastUserPrefixFromBot = "";
 
 const Chat = () => {
 
   const [messages, setMessages] = useState([]);
 
-  const [revealInsult, setRevealInsult] = useState(false);
+  const [revealInsult] = useState(false);
 
   const [inputMessage, setInputMessage] = useState("");
 
@@ -34,41 +33,31 @@ const Chat = () => {
 	});
 
 	const responseJson = responeData.json();
-	lastUserPrefixFromBot = responeData["user_input_category"];
+	const isInsult = responeData["is_insult"];
 
-	setTimeout(() => {
-  	setMessages((old) => [...old, { from: "computer", text: responseJson["chatbot_response"], insult: false }]);
-	}, 1000);
+	if (!isInsult) {
+		setTimeout(() => {
+		setMessages((old) => [...old, { from: "Kind Guy", text: responseJson["chatbot_response"], isCustom: false }]);
+		}, 3);
+	} else {
+		const insultList = responseJson["insult_data"];
+		insultList.forEach(insultData => {
+			setTimeout(() => {
+				setMessages((old) => [...old, { from: insultData["model"].toLowerCase(), text: insultData["insult"], isCustom: true, isInsult: true }]);
+			  }, 3);
+		});
+		setTimeout(() => {
+			setMessages((old) => [...old, { from: "Kind Guy", text: responseJson["recommended_response"], isCustom: true, isInsult: false }]);
+		  }, 3);
+	}
   };
-
-  const handleInsultCreation = async () => {
-	setRevealInsult(true);
-	lastUserText = lastUserText.toLowerCase();
-	lastUserText = lastUserText.replace("you", "i");
-	lastUserText = lastUserText.replace("are", "am");
-	const responeData = await fetch("localhost:9000/get-insult", {
-		method: "POST",
-		body: {
-			text: lastUserText,
-			prefix: lastUserPrefixFromBot
-		}
-	});
-	insultData = responeData.json()
-	setTimeout(() => {
-		setMessages((old) => [...old, { from: "computer", text: "foo", isInsult: true, responses: ["foo", "doo", "boo"] }]);
-	  }, 10);
-	  setTimeout(() => {
-		setMessages((old) => [...old, { from: "computer", text: "foo", isInsult: false, responses: ["foo", "doo", "boo"], isResponse: true }]);
-	  }, 11);
-  }
 
   return (
 	<Flex w="100%" h="100vh" justify="center" align="center">
   	<Flex w="40%" h="90%" flexDir="column">
-    	<Header 
-		handleInsultCreation={handleInsultCreation}/>
+    	<Header />
     	<Divider />
-    	<Messages messages={messages} />
+		<Messages messages={messages} />
 		<Divider />
     	<Footer
       	inputMessage={inputMessage}

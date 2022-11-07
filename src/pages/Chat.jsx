@@ -5,8 +5,6 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Messages from "../components/Messages";
 
-var lastUserText = "";
-
 const Chat = () => {
 
   const [messages, setMessages] = useState([]);
@@ -20,7 +18,6 @@ const Chat = () => {
 		return;
 	}
 	const data = inputMessage;
-	lastUserText = inputMessage;
 
 	setMessages((old) => [...old, { from: "me", text: data, insult: false }]);
 	setInputMessage("");

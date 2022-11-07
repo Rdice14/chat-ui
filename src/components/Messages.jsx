@@ -36,7 +36,7 @@ const Messages = ({ messages }) => {
 				<Flex key={index} w="100%">
 				<Avatar
 					name="The bot"
-					src={modelAvatar[item.from]}
+					src="https://m.media-amazon.com/images/M/MV5BMjQyNzM2MjM1Ml5BMl5BanBnXkFtZTcwMDE5NjI3Mg@@._V1_UY1200_CR117,0,630,1200_AL_.jpg"
 					bg="blue.300"
 				></Avatar>
 					<Skeleton count={3}>

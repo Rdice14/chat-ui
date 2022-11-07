@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Avatar, Flex, Text } from "@chakra-ui/react";
 import Custom from "./Custom";
-import Skeleton from "react-loading-skeleton";
 
 const Messages = ({ messages }) => {
   const AlwaysScrollToBottom = () => {
@@ -34,26 +33,23 @@ const Messages = ({ messages }) => {
 		} else {
 			return (
 				<Flex key={index} w="100%">
-				<Avatar
-					name="The bot"
-					src="https://m.media-amazon.com/images/M/MV5BMjQyNzM2MjM1Ml5BMl5BanBnXkFtZTcwMDE5NjI3Mg@@._V1_UY1200_CR117,0,630,1200_AL_.jpg"
+				  <Avatar
+					name="Computer"
+					src="https://avataaars.io/?avatarStyle=Transparent&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light"
 					bg="blue.300"
-				></Avatar>
-					<Skeleton count={3}>
-						<Flex
-							bg="gray.100"
-							color="black"
-							minW="100px"
-							maxW="350px"
-							my="1"
-							p="3"
-							borderRadius="8px"
-						>
-							<Text>{item.text}</Text>
-						</Flex>
-					</Skeleton>
+				  ></Avatar>
+				  <Flex
+					bg="gray.100"
+					color="black"
+					minW="100px"
+					maxW="350px"
+					my="1"
+					p="3"
+				  >
+					<Text>{item.text}</Text>
+				  </Flex>
 				</Flex>
-			);
+			  );
     	}
   	})}
   	<AlwaysScrollToBottom />

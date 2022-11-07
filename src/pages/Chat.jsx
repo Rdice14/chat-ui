@@ -22,15 +22,24 @@ const Chat = () => {
 	setMessages((old) => [...old, { from: "me", text: data, insult: false }]);
 	setInputMessage("");
 
-	const responeData = await fetch("localhost:9000/get-response", {
-		method: "POST",
-		body: {
-			"text": data
-		}
+	const uri = `http://localhost:5000/get-response/${data}`;
+	// const uri = `http://localhost:5000/?text="${data}"`;
+
+	const responseData = await fetch(uri, {
+		method: "GET",
+		// headers: {
+		// 	'Content-Type': 'application/json',
+		// },
+		// body: {
+		// 	"text": data
+		// }
 	});
 
-	const responseJson = responeData.json();
-	const isInsult = responeData["is_insult"];
+	// console.log(await responseData.json());
+
+	const responseJson = await responseData.json();
+	console.log(responseJson);
+	const isInsult = responseJson["is_insult"];
 
 	if (!isInsult) {
 		setTimeout(() => {

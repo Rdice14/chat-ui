@@ -1,7 +1,7 @@
 import React from "react";
 import { Flex, Input, Button } from "@chakra-ui/react";
 
-const Footer = ({ inputMessage, setInputMessage, handleSendMessage, isDisabled }) => {
+const Footer = ({ inputMessage, setInputMessage, handleSendMessage }) => {
   return (
 	<Flex w="100%" mt="5">
   	<Input
@@ -18,7 +18,6 @@ const Footer = ({ inputMessage, setInputMessage, handleSendMessage, isDisabled }
     	}}
     	value={inputMessage}
     	onChange={(e) => setInputMessage(e.target.value)}
-		disabled={isDisabled}
   	/>
   	<Button
     	bg="black"

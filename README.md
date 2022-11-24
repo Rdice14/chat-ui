@@ -5,8 +5,6 @@
 
 ## Running the Frontend
 
-Below are the steps needed to run the frontend
-
 ### `yarn`
 
 Installs dependencies using yarn
